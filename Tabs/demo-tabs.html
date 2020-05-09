@@ -180,25 +180,7 @@
 
             bind() {
 
-                //创建self把外部this和函数里的this区分开 
-
-                //let self = this
-                // this.$$tabItems.forEach($tab => {
-                //     $tab.onclick = () => {
-                //         this.$$tabItems.forEach($tab => $tab.classList.remove('active'))
-                //         this.classList.add('active')
-
-                //         //用translateX而不是left是为了是页面性能更好，渲染动画的时候使用Gpu，而不是CPU
-                //         this.$line.style.transform = `translateX(${this.offsetLeft}px)`
-                //         this.$line.style.width = this.offsetWidth + 'px'
-
-                //         let index = [...this.$$tabItems].indexOf(this)
-                //         this.$$tabPanels.forEach(($tab => $tab.classList.remove('active')))
-                //         this.$$tabPanels[index].classList.add('active')
-
-
-                //     }
-                // })
+                
 
 
                 let self = this
@@ -207,7 +189,7 @@
                         self.$$tabItems.forEach($tab => $tab.classList.remove('active'))
                         this.classList.add('active')
 
-                        //用translateX而不是left是为了是页面性能更好，渲染动画的时候使用Gpu，而不是CPU
+                       
                         self.$line.style.transform = `translateX(${this.offsetLeft}px)`
                         self.$line.style.width = this.offsetWidth + 'px'
 
