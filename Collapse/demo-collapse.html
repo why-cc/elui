@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collapse折叠面板</title>
+</head>
+
+<style>
+    .container {
+        max-width: 800px;
+        margin: 30px auto;
+        border-radius: 4px;
+        box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+
+    }
+
+    .collapse {}
+
+    .collapse .item {
+        border-top: 1px solid #999;
+        cursor: pointer;
+        transition: add .2s;
+    }
+
+    .collapse .item:last-child {
+        border-bottom: 1px solid #999;
+    }
+
+    .collapse .item-header {
+        font-size: 14px;
+        font-weight: bolder;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+
+    }
+
+    .collapse .item-header::after {
+        content: '';
+        display: block;
+        width: 6px;
+        height: 6px;
+        border-top: 1.5px solid #666;
+        border-right: 1.5px solid #666;
+        margin-left: auto;
+        margin-right: 3px;
+        transform: rotate(45deg);
+        transition: .4s;
+    }
+
+    .collapse .item.active .item-header::after {
+        transform: rotate(135deg);
+    }
+
+    .collapse .item-content {
+        font-size: 12px;
+        line-height: 2;
+        height: 0;
+        color: #666;
+        overflow: hidden;
+        transition: all .4s;
+    }
+
+    .collapse .item.active .item-content {
+        margin-bottom: 10px;
+    }
+
+    .collapse .item .item-content-child {
+        height: auto;
+    }
+</style>
+
+<body>
+
+    <div class="container">
+        <h2>Collapse折叠面板 1</h2>
+        <div class="collapse">
+
+            <div class="item">
+                <div class="item-header">一致性 Consistency</div>
+                <div class="item-content">
+                    <div class="item-content-child">
+                        7777777777777777777777777777777777777777777777</br>
+                        66666666666666666666666</br>
+                        5555555555555555555555555</br>
+                        44444444444444444444444444444444444<br>
+                        3333333333333333333333333333<br>
+                        2222222222222222222222222<br>1111111111
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="item active">
+                <div class="item-header">反馈 Feedback</div>
+                <div class="item-content">
+                    <div class="item-content-child">
+                        反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈<br>反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="item">
+                <div class="item-header">效率 Efficiency</div>
+                <div class="item-content">
+                    <div class="item-content-child">
+                        效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率<br>效率效率效率效率效率效率效率效率效率效率效率效率效率效率
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="item">
+                <div class="item-header">可控 Controllability</div>
+                <div class="item-content">
+                    <div class="item-content-child">
+                        可控可控可控可控可控可控可控可控可控可控可控<br>可控可控可控可控可控可控可控可控可控可控可控<br>可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="container">
+        <h2>Collapse折叠面板 2</h2>
+        <div class="collapse">
+
+            <div class="item">
+                <div class="item-header">一致性 Consistency</div>
+                <div class="item-content">
+                    <div class="item-content-child">
+                        7777777777777777777777777777777777777777777777</br>
+                        66666666666666666666666</br>
+                        5555555555555555555555555</br>
+                        44444444444444444444444444444444444<br>
+                        3333333333333333333333333333<br>
+                        2222222222222222222222222<br>1111111111
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="item active">
+                <div class="item-header">反馈 Feedback</div>
+                <div class="item-content">
+                    <div class="item-content-child">
+                        反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈<br>反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="item">
+                <div class="item-header">效率 Efficiency</div>
+                <div class="item-content">
+                    <div class="item-content-child">
+                        效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率效率<br>效率效率效率效率效率效率效率效率效率效率效率效率效率效率
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="item">
+                <div class="item-header">可控 Controllability</div>
+                <div class="item-content">
+                    <div class="item-content-child">
+                        可控可控可控可控可控可控可控可控可控可控可控<br>可控可控可控可控可控可控可控可控可控可控可控<br>可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控可控
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+
+        class Collapse {
+            constructor($container, type = 1) {
+                this.$container = $container
+                this.type = type
+
+                this.$$items = $container.querySelectorAll('.item')
+                this.$itemActiveContent = $container.querySelector('.item.active .item-content')
+
+                this.init()
+                this.bind()
+
+            }
+
+            init() {
+                this.$itemActiveContent.style.height = document.querySelector('.item.active .item-content .item-content-child').offsetHeight + 'px'
+            }
+            bind() {
+
+
+                let self = this
+                this.$$items.forEach($item1 => {
+                    $item1.onclick = function () {
+
+                        if (self.type === 2) {
+                            $item1.querySelector('.item-content').style.height = '0px'
+                            this.classList.toggle('active')
+
+                            console.log('aaa')
+                        } else if (self.type === 1) {
+                            self.$$items.forEach($item2 => {
+                                $item2.classList.remove('active')
+                                $item2.querySelector('.item-content').style.height = '0px'
+                            })
+                            $item1.classList.add('active')
+                        }
+
+
+
+
+                        $item1.querySelector('.item.active .item-content').style.height = $item1.querySelector('.item.active .item-content-child').offsetHeight + 'px'
+
+                    }
+                })
+            }
+        }
+
+
+        new Collapse(document.querySelectorAll('.collapse')[0], 2)
+        new Collapse(document.querySelectorAll('.collapse')[1])
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>
