@@ -213,22 +213,26 @@
                 this.$$items.forEach($item1 => {
                     $item1.onclick = function () {
 
-                        if (self.type === 2) {
-                            $item1.querySelector('.item-content').style.height = '0px'
-                            this.classList.toggle('active')
-
-                        } else if (self.type === 1) {
+                        if (self.type === 1) {
                             self.$$items.forEach($item2 => {
                                 $item2.classList.remove('active')
                                 $item2.querySelector('.item-content').style.height = '0px'
                             })
                             $item1.classList.add('active')
+                            $item1.querySelector('.item.active .item-content').style.height = $item1.querySelector('.item.active .item-content-child').offsetHeight + 'px'
+                        } else if (self.type === 2) {
+                            
+                            $item1.querySelector('.item-content').style.height = '0px'
+                            this.classList.toggle('active')
+
+                            if($item1.classList.contains('active')==true){
+                                $item1.querySelector('.item .item-content').style.height = $item1.querySelector('.item.active .item-content-child').offsetHeight + 'px'
+　　　　                         console.log('active');
+                            }else {
+                                $item1.querySelector('.item .item-content').style.height = '0px'
+                            }
+
                         }
-
-
-
-
-                        $item1.querySelector('.item.active .item-content').style.height = $item1.querySelector('.item.active .item-content-child').offsetHeight + 'px'
 
                     }
                 })
