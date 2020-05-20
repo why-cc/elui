@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message 点击关闭</title>
+
+
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .4);
+            border-radius: 8px;
+            padding: 10px 20px 20px;
+
+        }
+
+        .btn-group .button {
+            padding: 6px 12px;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            background: #fff;
+            border: 1px solid #999;
+        }
+
+        .btn-group .button:hover {
+            color: #3ae1ff;
+            border: 1px solid #3ae1ff;
+        }
+
+        .message {
+            font-size: 16px;
+            background-color: rgb(60, 236, 140);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            position: fixed;
+            left: 50%;
+            top: 0;
+            transform: translate(-50%, -50px);
+            opacity: 0;
+            transition: all .3s;
+            cursor: pointer;
+        }
+
+        .message.show {
+            transform: translate(-50%, 50px);
+            opacity: 1;
+        }
+
+        .message.success {
+            background-color: rgb(60, 236, 140);
+        }
+
+        .message.warning {
+            background-color: rgb(255, 186, 38);
+        }
+
+        .message.info {
+            background-color: rgb(177, 177, 177);
+        }
+
+        .message.danger {
+            background-color: rgb(247, 58, 11);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Message消息提示 (点击关闭)</h2>
+        <div class="btn-group">
+            <button id="btn-success" class="button">成功</button>
+            <button id="btn-warning" class="button">警告</button>
+            <button id="btn-info" class="button">消息</button>
+            <button id="btn-danger" class="button">错误</button>
+        </div>
+
+
+    </div>
+
+
+
+    <script>
+        class Message {
+            constructor({ type = 'success', text = '成功success' }) {
+                this.type = type
+                this.text = text
+
+                this.render()
+                this.bind()
+
+            }
+
+            render() {
+
+                let $div = document.createElement('div')
+                this.$message = $div
+                $div.classList.add('message')
+                $div.classList.add(this.type)
+
+                let $icon = document.createElement('span')
+                $icon.classList.add('iconfont')
+                $icon.classList.add('icon-' + this.type)
+                this.$message.appendChild($icon)
+
+
+                let $text = document.createTextNode(this.text)
+                this.$message.appendChild($text)
+                document.body.appendChild(this.$message)
+
+            }
+            bind() {
+
+                setTimeout(() => this.show())
+                //setTimeout(() => this.destory(), 3000)
+                setTimeout(() => this.destory())
+
+            }
+
+            show() {
+                this.$message.classList.add('show')
+
+            }
+            destory() {
+                //this.$message.classList.remove('show')
+                // setTimeout(() => this.$message.parentNode.removeChild(this.$message), 400)
+
+                let $self = this
+                this.$message.onclick = function () {
+                    $self.$message.classList.remove('show')
+                    setTimeout(() => $self.$message.parentNode.removeChild($self.$message), 300)
+                }
+            }
+
+
+
+        }
+
+        document.querySelector('#btn-success').onclick = function () {
+            new Message({ type: 'success', text: 'success' })
+        }
+
+        document.querySelector('#btn-warning').onclick = function () {
+            new Message({ type: 'warning', text: 'warning' })
+        }
+
+        document.querySelector('#btn-info').onclick = function () {
+            new Message({ type: 'info', text: 'info' })
+        }
+
+        document.querySelector('#btn-danger').onclick = function () {
+            new Message({ type: 'danger', text: 'danger' })
+        }
+
+    </script>
+
+</body>
+
+</html>
