@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ch">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      box-sizing: border-box;
+    }
+
+    body {
+      padding: 0 20px;
+    }
+
+    .main {
+      max-width: 1200px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+      margin: 160px auto;
+      border-radius: 10px;
+      padding: 10px;
+      height: 300px;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container .wrapper {
+      height: 100%;
+      display: flex;
+      align-items: stretch;
+      justify-content: flex-start;
+      transition: transform .3s;
+    }
+
+    .container .slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex: none;
+      user-select: none;
+    }
+
+    .container .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .container .btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(0, 0, 0, .3);
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .container .btn::after {
+      content: '';
+      display: block;
+      width: 32%;
+      height: 32%;
+      transform: translateY(-50%) rotate(45deg);
+      position: absolute;
+      top: 50%;
+    }
+
+    .container .prev {
+      left: 10px;
+    }
+
+    .container .next {
+      right: 10px;
+    }
+
+    .container .prev::after {
+      border-bottom: 2px solid #000;
+      border-left: 2px solid #000;
+      left: 15px;
+    }
+
+    .container .next::after {
+      border-top: 2px solid #000;
+      border-right: 2px solid #000;
+      right: 15px;
+    }
+
+    .wrap_pop {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, .8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      z-index: -99;
+      padding: 0 20px;
+    }
+
+    .wrap_pop.on {
+      opacity: 1;
+      z-index: 99;
+    }
+
+    .wrap_pop .main_pop {
+      max-width: 800px;
+      max-height: 500px;
+      width: 100%;
+      height: 80%;
+      position: relative;
+      background-color: #fff;
+      padding: 10px;
+    }
+
+    .wrap_pop .close {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      top: -50px;
+      right: 0;
+      cursor: pointer;
+      transform: rotate(45deg);
+      z-index: -1;
+    }
+
+    .wrap_pop .close::before,
+    .wrap_pop .close::after {
+      content: '';
+      display: block;
+      background-color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .wrap_pop .close::before {
+      width: 100%;
+      height: 2px;
+    }
+
+    .wrap_pop .close::after {
+      width: 2px;
+      height: 100%;
+    }
+
+    .wrap_pop .container_pop {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wrap_pop .wrapper_pop {
+      height: 100%;
+      display: flex;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+
+    .wrap_pop .slide_pop {
+      flex: none;
+    }
+
+    .wrap_pop .slide_pop img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .wrap_pop .indicator_pop {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .wrap_pop .item_pop {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #fff;
+      opacity: .5;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 1);
+      margin: 0 5px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .wrap_pop .item_pop.active {
+      opacity: 1;
+    }
+
+    .wrap_pop .item_pop::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200%;
+      height: 200%;
+      border-radius: 50%;
+    }
+
+    .wrap_pop .btn_pop {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      border: none;
+      background-color: rgba(0, 0, 0, .5);
+      cursor: pointer;
+      transition: all .3s;
+      opacity: 0;
+    }
+
+    .wrap_pop .prev_pop {
+      left: 0;
+    }
+
+    .wrap_pop .next_pop {
+      right: 0;
+    }
+
+    .container_pop:hover .btn_pop {
+      margin: 0 30px;
+      opacity: 1;
+    }
+
+    .wrap_pop .btn_pop::after {
+      content: '';
+      display: block;
+      width: 28%;
+      height: 28%;
+      transform: translateY(-50%) rotate(45deg);
+      position: absolute;
+      top: 50%;
+    }
+
+    .wrap_pop .prev_pop::after {
+      border-bottom: 2px solid #fff;
+      border-left: 2px solid #fff;
+      left: 16px;
+    }
+
+    .wrap_pop .next_pop::after {
+      border-top: 2px solid #fff;
+      border-right: 2px solid #fff;
+      right: 16px;
+    }
+
+    .wrap_pop {}
+
+    .wrap_pop {}
+
+    .wrap_pop {}
+
+    .wrap_pop {}
+
+    .wrap_pop {}
+
+    .wrap_pop {}
+
+    .wrap_pop {}
+
+    .wrap_pop {}
+
+    .wrap_pop {}
+  </style>
+</head>
+
+<body>
+
+  <div class="main">
+    <div class="container">
+      <div class="wrapper">
+        <div class="slide active"><img src="img/nature-1.jpg" alt=""></div>
+        <div class="slide"><img src="img/nature-2.jpg" alt=""></div>
+        <div class="slide"><img src="img/nature-3.jpg" alt=""></div>
+        <div class="slide"><img src="img/nature-4.jpg" alt=""></div>
+        <div class="slide"><img src="img/nature-5.jpg" alt=""></div>
+        <div class="slide"><img src="img/nature-6.jpg" alt=""></div>
+        <div class="slide"><img src="img/nature-7.jpg" alt=""></div>
+        <div class="slide"><img src="img/nature-8.jpg" alt=""></div>
+        <div class="slide"><img src="img/nature-9.jpg" alt=""></div>
+      </div>
+      <!-- 箭头 -->
+      <button class="btn prev"></button>
+      <button class="btn next"></button>
+    </div>
+  </div>
+
+  <!-- 弹出 -->
+  <div class="wrap_pop">
+    <div class="main_pop">
+      <div class="close"></div>
+      <div class="container_pop">
+        <div class="wrapper_pop"></div>
+        <div class="indicator_pop"></div>
+        <button class="btn_pop prev_pop"></button>
+        <button class="btn_pop next_pop"></button>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const $ = s => document.querySelector(s)
+    const $$ = s => document.querySelectorAll(s)
+
+    //main
+    const $container = $('.container')
+    const $wrapper = $('.container .wrapper')
+    const $$slides = $$('.container .slide')
+    const $prev = $('.container .prev')
+    const $next = $('.container .next')
+
+    //slide数量
+    const int = 5
+
+    //slide间距
+    const spacing = 10
+
+    //container宽度
+    const containerWidth = $container.getBoundingClientRect().width
+
+    //计算slide宽度
+    const slideWidth = (containerWidth - ((int - 1) * spacing)) / int
+
+    //图片url
+    let imgSrc = []
+
+    //弹出
+    const $wrap_pop = $('.wrap_pop')
+    const $close = $('.wrap_pop .close')
+    const $containerPop = $('.wrap_pop .container_pop')
+    const $wrapperPop = $('.wrap_pop .wrapper_pop')
+    const $indicatorPop = $('.wrap_pop .indicator_pop')
+    const $prevPop = $('.wrap_pop .prev_pop')
+    const $nextPop = $('.wrap_pop .next_pop')
+
+    $$slides.forEach($slide => {
+      $slide.style.width = slideWidth + 'px'
+      $slide.style.marginRight = spacing + 'px'
+      //获取图片url
+      imgSrc.push($slide.firstElementChild.getAttribute('src'))
+      //创建弹出slide
+      let nodeSlide = document.createElement('div')
+      nodeSlide.classList.add('slide_pop')
+      $wrapperPop.appendChild(nodeSlide)
+      //创建弹出indicator
+      let nodeItem = document.createElement('div')
+      nodeItem.classList.add('item_pop')
+      $indicatorPop.appendChild(nodeItem)
+      //点击打开弹出
+      $slide.onclick = function () {
+        $wrap_pop.classList.add('on')
+        let index = [...$$slides].indexOf(this)
+        setSlidePop(index)
+        setIndicatorItemPop(index)
+      }
+    })
+
+    const $$slidePops = $$('.container_pop .slide_pop')
+    $$slidePops[0].classList.add('active')
+
+    const $$indicatorItemPops = $$('.indicator_pop .item_pop')
+    $$indicatorItemPops[0].classList.add('active')
+
+    //获取弹出轮播宽度
+    const slidePopWidth = $containerPop.getBoundingClientRect().width
+
+    for (let i = 0; i < $$slides.length; i++) {
+      //创建弹出img
+      let nodeImg = document.createElement('img')
+      nodeImg.setAttribute('src', imgSrc[i])
+      $$slidePops[i].appendChild(nodeImg)
+      $$slidePops[i].style.width = slidePopWidth + 'px'
+    }
+
+
+    //主轮播
+    const getIndex = () => [...$$slides].indexOf($('.container .slide.active'))
+    const getIndexPrev = () => (getIndex() - 1 + $$slides.length - (int - 1)) % ($$slides.length - (int - 1))
+    const getIndexNext = () => (getIndex() + 1) % ($$slides.length - (int - 1))
+
+    const setSlide = index => {
+      $$slides.forEach($slide => $slide.classList.remove('active'))
+      $$slides[index].classList.add('active')
+      $wrapper.style.transform = 'translateX(' + ((slideWidth + spacing) * -index) + 'px)'
+    }
+
+    $prev.onclick = function () {
+      let index = getIndexPrev()
+      setSlide(index)
+    }
+
+    $next.onclick = function () {
+      let index = getIndexNext()
+      setSlide(index)
+    }
+
+    //弹出轮播
+    const getIndexPop = () => [...$$slidePops].indexOf($('.container_pop .slide_pop.active'))
+    const getIndexPrevPop = () => (getIndexPop() - 1 + $$slidePops.length) % $$slidePops.length
+    const getIndexNextPop = () => (getIndexPop() + 1) % $$slidePops.length
+
+    //关闭
+    $close.onclick = function () {
+      $wrap_pop.classList.remove('on')
+    }
+
+    const setSlidePop = index => {
+      $$slidePops.forEach($slidePop => $slidePop.classList.remove('active'))
+      $$slidePops[index].classList.add('active')
+      $wrapperPop.style.transform = 'translateX(' + slidePopWidth * -index + 'px)'
+    }
+
+    const setIndicatorItemPop = index => {
+      $$indicatorItemPops.forEach($indicatorPop => {
+        $indicatorPop.classList.remove('active')
+        $$indicatorItemPops[index].classList.add('active')
+      })
+    }
+
+    $$indicatorItemPops.forEach($indicPop => {
+      $indicPop.onclick = function () {
+        let index = [...$$indicatorItemPops].indexOf(this)
+        setSlidePop(index)
+        setIndicatorItemPop(index)
+      }
+    })
+
+    $prevPop.onclick = function () {
+      let index = getIndexPrevPop()
+      setSlidePop(index)
+      setIndicatorItemPop(index)
+    }
+
+    $nextPop.onclick = function () {
+      let index = getIndexNextPop()
+      setSlidePop(index)
+      setIndicatorItemPop(index)
+    }
+
+  </script>
+
+</body>
+
+</html>
